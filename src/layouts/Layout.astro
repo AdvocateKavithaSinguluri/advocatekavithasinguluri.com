@@ -5,9 +5,13 @@ import Header from '../components/Header.astro'
 
 interface Props {
 	title?: string
+	description?: string
 }
 
-const { title = 'Kavitha Singuluri Advocate Associates' } = Astro.props
+const {
+	title = 'Kavitha Singuluri Advocate Associates',
+	description = 'Advocate Kavitha Singuluri is a dedicated legal professional based in Chennai, India. With expertise in property law, family law, and civil litigation, she provides personalized legal solutions to individuals and businesses.',
+} = Astro.props
 ---
 
 <!doctype html>
@@ -17,6 +21,10 @@ const { title = 'Kavitha Singuluri Advocate Associates' } = Astro.props
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
 		<title>{title}</title>
 		<ClientRouter />
 	</head>
