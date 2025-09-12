@@ -1,0 +1,126 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import { format } from 'date-fns'
+import BlogCard from '../../components/BlogCard.astro'
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog')
+	const sortedPosts = posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+
+	return sortedPosts.map((post, index) => {
+		const prevPost = index > 0 ? sortedPosts[index - 1] : null
+		const nextPost = index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null
+		const recentPosts = sortedPosts.slice(0, 3)
+
+		return {
+			params: { slug: post.slug },
+			props: {
+				post,
+				prevPost,
+				nextPost,
+				recentPosts,
+			},
+		}
+	})
+}
+
+interface Props {
+	post: CollectionEntry<'blog'>
+	recentPosts: CollectionEntry<'blog'>[]
+	prevPost: CollectionEntry<'blog'> | null
+	nextPost: CollectionEntry<'blog'> | null
+}
+
+const { post, recentPosts, prevPost, nextPost } = Astro.props
+const { Content } = await post.render()
+const postDateISO = new Date(post.data.date).toISOString()
+---
+
+<Layout title={`${post.data.title} | Kavitha Singuluri Law Firm`}>
+	<div class="min-h-screen bg-gray-50 py-32">
+		<div class="container mx-auto max-w-4xl px-4 sm:px-6">
+			<article class="p-4 sm:p-8">
+				<header class="mb-10">
+					<a href="/blog" class="group mb-4 inline-flex items-center text-gray-600 hover:text-gray-900">
+						<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+						</svg>
+						Back to Blog
+					</a>
+
+					<h1 class="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+						{post.data.title}
+					</h1>
+
+					<div class="flex flex-wrap items-center gap-3 text-base text-gray-600">
+						<time datetime={postDateISO} class="font-medium">
+							{format(new Date(post.data.date), 'MMMM dd, yyyy')}
+						</time>
+						<span>•</span>
+						<span class="font-medium">{post.data.author}</span>
+					</div>
+
+					{
+						post.data.cover && (
+							<div class="pt-6">
+								<img src={post.data.cover} alt={`${post.data.title} cover`} class="h-auto w-full rounded-lg object-cover" />
+							</div>
+						)
+					}
+				</header>
+
+				<div class="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-a:text-yellow-700 hover:prose-a:text-yellow-800 prose-strong:text-gray-800">
+					<Content />
+				</div>
+
+				{
+					(prevPost || nextPost) && (
+						<nav class="mt-12 flex justify-between border-t border-gray-200 pt-8" aria-label="Article navigation">
+							<div>
+								{prevPost && (
+									<a href={`/blog/${prevPost.slug}`} class="group inline-flex items-center text-gray-600 hover:text-yellow-700">
+										<svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+										</svg>
+										<div>
+											<span class="text-xs text-gray-500">Previous Post</span>
+											<p class="text-sm font-medium group-hover:text-yellow-700">{prevPost.data.title}</p>
+										</div>
+									</a>
+								)}
+							</div>
+
+							<div class="text-right">
+								{nextPost && (
+									<a href={`/blog/${nextPost.slug}`} class="group inline-flex items-center text-gray-600 hover:text-yellow-700">
+										<div>
+											<span class="text-xs text-gray-500">Next Post</span>
+											<p class="text-sm font-medium group-hover:text-yellow-700">{nextPost.data.title}</p>
+										</div>
+										<svg xmlns="http://www.w3.org/2000/svg" class="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+										</svg>
+									</a>
+								)}
+							</div>
+						</nav>
+					)
+				}
+
+				{
+					recentPosts.length > 0 && (
+						<div class="mt-16 border-t border-gray-400 pt-8">
+							<h2 class="mb-8 font-serif text-2xl font-bold tracking-tight">Latest posts</h2>
+							<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+								{recentPosts.map((recent) => (
+									<BlogCard post={recent} />
+								))}
+							</div>
+						</div>
+					)
+				}
+			</article>
+		</div>
+	</div>
+</Layout>

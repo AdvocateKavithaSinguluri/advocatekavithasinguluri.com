@@ -1,0 +1,153 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import { paginate } from '../../utils/pagination.ts'
+import BlogCard from '../../components/BlogCard.astro'
+
+// Fetch all posts
+const allPosts = await getCollection('blog')
+
+// URL params
+const url = Astro.url ?? { search: '' }
+const page = Math.max(1, Number(url.searchParams.get('page')) || 1)
+
+// Sort posts descending by date
+const sortedPosts = allPosts.sort((a, b) => {
+	const aDate = new Date(a.data.date).valueOf()
+	const bDate = new Date(b.data.date).valueOf()
+	return bDate - aDate
+})
+
+// Pagination
+const POSTS_PER_PAGE = 6
+const { items: posts, totalPages, currentPage } = paginate(sortedPosts, POSTS_PER_PAGE, page)
+
+// Page metadata
+const pageTitle = 'Blog'
+const pageHeading = 'Latest Articles'
+
+// Helper to build URL and preserve other params
+function buildUrl(newParams = {}) {
+	const params = new URLSearchParams(url.search || '')
+
+	for (const [k, v] of Object.entries(newParams)) {
+		if (v === null || v === undefined) {
+			params.delete(k)
+		} else {
+			params.set(k, String(v))
+		}
+	}
+
+	// If page=1 we prefer to omit the page param for clean URLs
+	if (params.get('page') === '1') params.delete('page')
+
+	const qs = params.toString()
+	return `/blog${qs ? `?${qs}` : ''}`
+}
+---
+
+<Layout title={`${pageTitle} | Kavitha Singuluri Law Firm`}>
+	<main class="min-h-screen bg-gray-50">
+		<div class="container mx-auto max-w-6xl px-4 pb-16 pt-32 md:px-6">
+			<header class="my-8 md:mb-12">
+				<div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+					<h1 class="font-serif text-3xl text-gray-800 md:text-4xl lg:text-5xl">
+						{pageHeading}
+					</h1>
+				</div>
+			</header>
+			<!-- Content -->
+			{
+				posts.length > 0 ? (
+					<>
+						<section class="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+							{posts.map((post) => {
+								return <BlogCard post={post} />
+							})}
+						</section>
+
+						{totalPages > 1 && (
+							<nav class="flex justify-center" aria-label="Pagination" role="navigation">
+								<div class="flex items-center gap-1 sm:gap-2">
+									{currentPage > 1 && (
+										<a
+											href={buildUrl({ page: currentPage > 2 ? String(currentPage - 1) : null })}
+											class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+											aria-label="Go to previous page"
+										>
+											<svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+											</svg>
+											Previous
+										</a>
+									)}
+
+									{Array.from({ length: totalPages }, (_, i) => {
+										const pageNumber = i + 1
+										const isCurrentPage = currentPage === pageNumber
+										return (
+											<a
+												href={buildUrl({ page: pageNumber > 1 ? String(pageNumber) : null })}
+												class:list={[
+													'rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2',
+													isCurrentPage ? 'border-yellow-500 bg-yellow-500 text-white' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
+												]}
+												aria-label={isCurrentPage ? `Current page ${pageNumber}` : `Go to page ${pageNumber}`}
+												aria-current={isCurrentPage ? 'page' : undefined}
+											>
+												{pageNumber}
+											</a>
+										)
+									})}
+
+									{currentPage < totalPages && (
+										<a
+											href={buildUrl({ page: String(currentPage + 1) })}
+											class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+											aria-label="Go to next page"
+										>
+											Next
+											<svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+											</svg>
+										</a>
+									)}
+								</div>
+							</nav>
+						)}
+					</>
+				) : (
+					<div class="py-16 text-center">
+						<div class="mx-auto max-w-md">
+							<svg class="mx-auto mb-4 h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="1.5"
+									d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+								/>
+							</svg>
+							<h3 class="mb-2 font-serif text-xl text-gray-900">No articles found</h3>
+						</div>
+					</div>
+				)
+			}
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.line-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.line-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>
