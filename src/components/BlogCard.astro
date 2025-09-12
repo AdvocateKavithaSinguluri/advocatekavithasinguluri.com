@@ -1,0 +1,62 @@
+---
+const { post } = Astro.props
+const dateISO = new Date(post.data.date).toISOString()
+---
+
+<article class="group">
+	<a
+		href={`/blog/${post.slug}`}
+		class="block h-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+	>
+		{
+			post.data.cover && (
+				<div class="relative overflow-hidden">
+					<img
+						src={post.data.cover}
+						alt={`Cover for ${post.data.title}`}
+						class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-52"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+				</div>
+			)
+		}
+
+		<div class="flex h-full flex-col p-6">
+			<div class="mb-3 flex items-center gap-3 text-sm">
+				<time class="text-gray-500" datetime={dateISO}>
+					{
+						new Date(post.data.date).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'short',
+							day: 'numeric',
+						})
+					}
+				</time>
+			</div>
+
+			<h2 class="mb-3 line-clamp-2 font-serif text-lg text-gray-900 transition-colors duration-300 group-hover:text-yellow-700 sm:text-xl">
+				{post.data.title}
+			</h2>
+
+			<p class="mb-4 line-clamp-3 flex-grow text-sm leading-relaxed text-gray-600">
+				{post.data.description}
+			</p>
+
+			<div class="mt-auto flex items-center text-sm font-medium text-yellow-600 group-hover:text-yellow-700">
+				<span>Read Article</span>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					aria-hidden="true"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+				</svg>
+			</div>
+		</div>
+	</a>
+</article>

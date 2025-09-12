@@ -31,6 +31,7 @@ A static website for Advocate Kavitha Singuluri & Associates, built with [Astro]
 ## 🧑‍💻 Local Development
 
 1. **Install dependencies:**
+
    ```sh
    bun install
    ```
