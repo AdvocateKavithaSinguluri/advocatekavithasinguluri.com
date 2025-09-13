@@ -1,21 +1,46 @@
 <section class="p-4 sm:p-10">
-	<h2 class="mb-4 border-b border-gray-400 pb-4 font-serif text-3xl font-light text-gray-800 sm:mb-6 sm:text-4xl">Send a Query</h2>
+	<h2 class="mb-4 border-b border-gray-400 pb-4 font-serif text-3xl font-light text-gray-800 sm:mb-6 sm:text-4xl">
+		Send a Query
+	</h2>
 	<div class="space-y-4 sm:space-y-8">
 		<form id="legalForm" class="space-y-4 sm:space-y-6">
 			<div class="space-y-3 sm:space-y-4">
 				<!-- Name -->
 				<div class="group flex flex-col items-start sm:flex-row sm:space-x-4">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
 					</svg>
 					<div class="w-full flex-1">
-						<input type="text" id="name" name="name" placeholder="Your Name" required class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1" />
+						<input
+							type="text"
+							id="name"
+							name="name"
+							placeholder="Your Name"
+							required
+							class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1"
+						/>
 					</div>
 				</div>
 
 				<!-- Phone -->
 				<div class="group flex flex-col items-start sm:flex-row sm:space-x-4">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -24,19 +49,41 @@
 						></path>
 					</svg>
 					<div class="w-full flex-1">
-						<input type="tel" id="phone" name="phone" placeholder="Phone Number" required class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1" />
+						<input
+							type="tel"
+							id="phone"
+							name="phone"
+							placeholder="Phone Number"
+							required
+							class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1"
+						/>
 					</div>
 				</div>
 			</div>
 
 			<!-- Practice Area -->
 			<div class="group flex flex-col items-start sm:flex-row sm:space-x-4">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l9 6 9-6M3 6v12a2 2 0 002 2h14a2 2 0 002-2V6m-2 0H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2z"
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M3 6l9 6 9-6M3 6v12a2 2 0 002 2h14a2 2 0 002-2V6m-2 0H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2z"
 					></path>
 				</svg>
 				<div class="w-full flex-1">
-					<select id="practiceArea" name="practiceArea" required class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1">
+					<select
+						id="practiceArea"
+						name="practiceArea"
+						required
+						class="w-full rounded-lg border border-gray-300 p-3 focus:border-transparent focus:ring-1"
+					>
 						<option value="">Select Practice Area</option>
 						<option value="banking">Banking and Finance Laws</option>
 						<option value="bankruptcy">Insolvency and Bankruptcy Laws</option>
@@ -52,8 +99,18 @@
 
 			<!-- Case Description -->
 			<div class="group flex flex-col items-start sm:flex-row sm:space-x-4">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6 shrink-0 text-gray-600 group-hover:text-gray-800 sm:mt-3"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
 					></path>
 				</svg>
 				<div class="w-full flex-1">
@@ -84,7 +141,13 @@
 								<p class="text-sm font-light text-gray-900 sm:text-base">Send your case details directly</p>
 							</div>
 						</div>
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#25D366]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-6 w-6 text-[#25D366]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
 						</svg>
 					</div>
@@ -99,7 +162,9 @@
 	const whatsappButton = document.getElementById('whatsappButton') as HTMLButtonElement
 
 	if (form && whatsappButton) {
-		const inputs = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+		const inputs = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+			'input, select, textarea'
+		)
 
 		// Create error message elements for each input
 		inputs.forEach((input) => {

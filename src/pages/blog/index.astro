@@ -90,7 +90,9 @@ function buildUrl(newParams = {}) {
 												href={buildUrl({ page: pageNumber > 1 ? String(pageNumber) : null })}
 												class:list={[
 													'rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2',
-													isCurrentPage ? 'border-yellow-500 bg-yellow-500 text-white' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
+													isCurrentPage
+														? 'border-yellow-500 bg-yellow-500 text-white'
+														: 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
 												]}
 												aria-label={isCurrentPage ? `Current page ${pageNumber}` : `Go to page ${pageNumber}`}
 												aria-current={isCurrentPage ? 'page' : undefined}
