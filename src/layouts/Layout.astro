@@ -4,40 +4,82 @@ import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
 
 interface Props {
-	title?: string
-	description?: string
+    title?: string
+    description?: string
+    url?: string
+    image?: string
 }
 
 const {
-	title = 'Kavitha Singuluri Advocate & Associates',
-	description = 'Advocate Kavitha Singuluri is a dedicated legal professional based in Chennai, India. With expertise in banking laws, finance and corporate laws, property law, family law, and civil litigation, she provides personalized legal solutions to individuals and businesses.',
+    title = 'Kavitha Singuluri Advocate & Associates',
+    description = 'Advocate Kavitha Singuluri is a dedicated legal professional based in Chennai, India. With expertise in banking laws, finance and corporate laws, property law, family law, and civil litigation, she provides personalized legal solutions to individuals and businesses.',
+    url = 'https://www.kavithasinguluri.com', // Replace with actual domain
+    image = '/assets/law.webp',
 } = Astro.props
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:image" content="assets/law.webp" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="assets/law.webp" />
-		<title>{title}</title>
-		<ClientRouter />
-	</head>
-	<body class="bg-white text-gray-800 antialiased">
-		<Header />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+    <head>
+        <!-- Basic SEO -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={description} />
+        <meta name="keywords" content="Advocate Kavitha Singuluri, Lawyer Chennai, Legal Services India, Banking Law, Corporate Law, Family Law, Civil Litigation, Property Law" />
+        <meta name="author" content="Kavitha Singuluri Advocate & Associates" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="canonical" href={url} />
+
+        <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={image} />
+        <meta property="og:site_name" content="Kavitha Singuluri Advocate & Associates" />
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
+        <meta name="twitter:site" content="@YourTwitterHandle" /> <!-- Replace if available -->
+
+        <!-- Structured Data (Organization / Local Business Schema) -->
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LegalService",
+            "name": "Kavitha Singuluri Advocate & Associates",
+            "url": url,
+            "logo": image,
+            "image": image,
+            "description": description,
+            "founder": {
+              "@type": "Person",
+              "name": "Kavitha Singuluri",
+              "jobTitle": "Advocate"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Chennai",
+              "addressCountry": "India"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/in/kavitha-singuluri-05836872/",
+            ]
+          })}
+        </script>
+
+        <title>{title}</title>
+        <ClientRouter />
+    </head>
+    <body class="bg-white text-gray-800 antialiased">
+        <Header />
+        <main>
+          <slot />
+        </main>
+        <Footer />
+    </body>
 </html>
